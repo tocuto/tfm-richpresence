@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from tfm.packet import Packet
+from tfmplugins.tfm.packet import Packet
 from pypresence import AioPresence
 
 
@@ -34,10 +34,16 @@ class TFMPresence:
 			self.discord = AioPresence("763125602932097054")
 			await self.discord.connect()
 
-			await self.discord.update(
-				large_image = "tfm-icon",
-				details = "In login screen."
-			)
+			if not self.logged:
+				await self.discord.update(
+					large_image = "tfm-icon",
+					details = "In login screen."
+				)
+			else:
+				await self.discord.update(
+					large_image = "tfm-icon",
+					details = "Playing"
+				)
 
 	async def tear_down(self):
 		if self.discord is not None:
